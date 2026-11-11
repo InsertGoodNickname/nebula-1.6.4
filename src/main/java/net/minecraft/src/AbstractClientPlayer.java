@@ -79,8 +79,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
 
     public static String getCapeUrl(String par0Str)
     {
-        //return String.format("http://skins.minecraft.net/MinecraftCloaks/%s.png", StringUtils.stripControlCodes(par0Str));
-        return String.format("http://crafthead.net/cape/%s.png", StringUtils.stripControlCodes(par0Str));
+        return String.format("http://skins.minecraft.net/MinecraftCloaks/%s.png", StringUtils.stripControlCodes(par0Str));
     }
 
     public static ResourceLocation getLocationSkin(String par0Str)
