@@ -11,12 +11,12 @@ public class RenderPlayer extends RendererLivingEntity
     private ModelBiped modelArmorChestplate;
     private ModelBiped modelArmor;
 
-    public RenderPlayer()
+    public RenderPlayer(boolean slimSkin)
     {
-        super(new ModelBiped(0.0F), 0.5F);
+        super(new ModelBiped(0.0F, slimSkin), 0.5F);
         this.modelBipedMain = (ModelBiped)this.mainModel;
-        this.modelArmorChestplate = new ModelBiped(1.0F);
-        this.modelArmor = new ModelBiped(0.5F);
+        this.modelArmorChestplate = new ModelBiped(1.0F, slimSkin);
+        this.modelArmor = new ModelBiped(0.5F, slimSkin);
     }
 
     /**
@@ -260,7 +260,8 @@ public class RenderPlayer extends RendererLivingEntity
         if (var29 != null)
         {
             GL11.glPushMatrix();
-            this.modelBipedMain.bipedRightArm.postRender(0.0625F);
+            // this.modelBipedMain.bipedRightArm.postRender(0.0625F);
+            this.modelBipedMain.postRenderArm(0.0625F);
             GL11.glTranslatef(-0.0625F, 0.4375F, 0.0625F);
 
             if (par1AbstractClientPlayer.fishEntity != null)

@@ -24,22 +24,34 @@ public class ModelBiped extends ModelBase
      */
     public int heldItemRight;
     public boolean isSneak;
+    private boolean isSlim;
 
     /** Records whether the model should be rendered aiming a bow. */
     public boolean aimedBow;
 
     public ModelBiped()
     {
-        this(0.0F);
+        this(0.0F, false);
     }
 
     public ModelBiped(float par1)
     {
-        this(par1, 0.0F, 64, 32);
+        this(par1, 0.0F, 64, 32, false);
     }
 
-    public ModelBiped(float par1, float par2, int par3, int par4)
+    public ModelBiped(float par1, boolean slimSkin)
     {
+        this(par1, 0.0F, 64, 32, slimSkin);
+    }
+
+    public ModelBiped(float par1, float par2, int par3, int par4){
+        this(par1, par2, par3, par4, false);
+    }
+
+    public ModelBiped(float par1, float par2, int par3, int par4, boolean slimSkin)
+    {
+        isSlim = slimSkin;
+
         this.textureWidth = par3;
         this.textureHeight = par4;
         this.bipedCloak = new ModelRenderer(this, 0, 0);
@@ -55,13 +67,35 @@ public class ModelBiped extends ModelBase
         this.bipedBody = new ModelRenderer(this, 16, 16);
         this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, par1);
         this.bipedBody.setRotationPoint(0.0F, 0.0F + par2, 0.0F);
-        this.bipedRightArm = new ModelRenderer(this, 40, 16);
-        this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, par1);
-        this.bipedRightArm.setRotationPoint(-5.0F, 2.0F + par2, 0.0F);
-        this.bipedLeftArm = new ModelRenderer(this, 40, 16);
-        this.bipedLeftArm.mirror = true;
-        this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, par1);
-        this.bipedLeftArm.setRotationPoint(5.0F, 2.0F + par2, 0.0F);
+
+        if(slimSkin){
+            this.bipedRightArm = new ModelRenderer(this, 40, 16);
+            this.bipedRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, par1);
+            this.bipedRightArm.setRotationPoint(-5.0F, 2.5F + par2, 0.0F);
+
+            this.bipedLeftArm = new ModelRenderer(this, 40, 16);
+            this.bipedLeftArm.mirror = true;
+            this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, par1);
+            this.bipedLeftArm.setRotationPoint(5.0F, 2.5F + par2, 0.0F);
+        }else{
+            this.bipedRightArm = new ModelRenderer(this, 40, 16);
+            this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, par1);
+            this.bipedRightArm.setRotationPoint(-5.0F, 2.0F + par2, 0.0F);
+
+            this.bipedLeftArm = new ModelRenderer(this, 40, 16);
+            this.bipedLeftArm.mirror = true;
+            this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, par1);
+            this.bipedLeftArm.setRotationPoint(5.0F, 2.0F + par2, 0.0F);
+        }
+
+        // this.bipedRightArm = new ModelRenderer(this, 40, 16);
+        // this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4, par1);
+        // this.bipedRightArm.setRotationPoint(-5.0F, 2.0F + par2, 0.0F);
+        // this.bipedLeftArm = new ModelRenderer(this, 40, 16);
+        // this.bipedLeftArm.mirror = true;
+        // this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4, par1);
+        // this.bipedLeftArm.setRotationPoint(5.0F, 2.0F + par2, 0.0F);
+
         this.bipedRightLeg = new ModelRenderer(this, 0, 16);
         this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4, par1);
         this.bipedRightLeg.setRotationPoint(-1.9F, 12.0F + par2, 0.0F);
@@ -241,5 +275,15 @@ public class ModelBiped extends ModelBase
     public void renderCloak(float par1)
     {
         this.bipedCloak.render(par1);
+    }
+
+    public void postRenderArm(float par1){
+        if(isSlim){
+            ++this.bipedRightArm.rotationPointX;
+            this.bipedRightArm.postRender(par1);
+            --this.bipedRightArm.rotationPointX;
+        }else{
+            this.bipedRightArm.postRender(par1);
+        }
     }
 }

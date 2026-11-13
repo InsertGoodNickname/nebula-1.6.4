@@ -28,6 +28,10 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         }
     }
 
+    public String getSkinType(){
+        return "slim";
+    }
+
     public ThreadDownloadImageData getTextureSkin()
     {
         return this.downloadImageSkin;

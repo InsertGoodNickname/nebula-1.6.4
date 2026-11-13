@@ -9,6 +9,8 @@ public class RenderManager
 {
     /** A map of entity classes and the associated renderer. */
     private Map entityRenderMap = new HashMap();
+    private Map<String, RenderPlayer> skinMap = new HashMap<>();
+    private RenderPlayer daPlayer;
 
     /** The static instance of RenderManager. */
     public static RenderManager instance = new RenderManager();
@@ -58,7 +60,15 @@ public class RenderManager
         this.entityRenderMap.put(EntityZombie.class, new RenderZombie());
         this.entityRenderMap.put(EntitySlime.class, new RenderSlime(new ModelSlime(16), new ModelSlime(0), 0.25F));
         this.entityRenderMap.put(EntityMagmaCube.class, new RenderMagmaCube());
-        this.entityRenderMap.put(EntityPlayer.class, new RenderPlayer());
+        // this.entityRenderMap.put(EntityPlayer.class, daPlayer);
+
+        //Assuming I understand the 1.8.8 code correctly... there's two here??
+        this.daPlayer = new RenderPlayer(false);
+        this.skinMap.put("default", daPlayer);
+        this.skinMap.put("slim", new RenderPlayer(true));
+        this.skinMap.get("default").setRenderManager(this);
+        this.skinMap.get("slim").setRenderManager(this);
+        
         this.entityRenderMap.put(EntityGiantZombie.class, new RenderGiantZombie(new ModelZombie(), 0.5F, 6.0F));
         this.entityRenderMap.put(EntityGhast.class, new RenderGhast());
         this.entityRenderMap.put(EntitySquid.class, new RenderSquid(new ModelSquid(), 0.7F));
@@ -118,6 +128,12 @@ public class RenderManager
 
     public Render getEntityRenderObject(Entity par1Entity)
     {
+         if(par1Entity instanceof AbstractClientPlayer){
+            String skin = ((AbstractClientPlayer)par1Entity).getSkinType();
+            RenderPlayer player = (RenderPlayer)this.skinMap.get(skin);
+            return (Render)(player != null ? player : this.daPlayer);
+        }
+
         return this.getEntityClassRenderObject(par1Entity.getClass());
     }
 

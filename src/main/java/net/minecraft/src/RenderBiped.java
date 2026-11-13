@@ -211,7 +211,8 @@ public class RenderBiped extends RenderLiving
                 GL11.glScalef(var6, var6, var6);
             }
 
-            this.modelBipedMain.bipedRightArm.postRender(0.0625F);
+            //this.modelBipedMain.bipedRightArm.postRender(0.0625F);
+            this.modelBipedMain.postRenderArm(0.0625F);
             GL11.glTranslatef(-0.0625F, 0.4375F, 0.0625F);
 
             if (var4.itemID < 256 && RenderBlocks.renderItemIn3d(Block.blocksList[var4.itemID].getRenderType()))
