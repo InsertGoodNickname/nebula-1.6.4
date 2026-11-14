@@ -15,7 +15,7 @@ public class RenderPlayer extends RendererLivingEntity
     {
         super(new ModelBiped(0.0F, slimSkin), 0.5F);
         this.modelBipedMain = (ModelBiped)this.mainModel;
-        this.modelArmorChestplate = new ModelBiped(1.0F, slimSkin);
+        this.modelArmorChestplate = new ModelBiped(1.0F, false);
         this.modelArmor = new ModelBiped(0.5F, slimSkin);
     }
 

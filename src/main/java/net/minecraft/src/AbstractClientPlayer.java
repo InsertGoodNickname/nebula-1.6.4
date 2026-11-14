@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import net.minecraft.ThreadFetchSkinType;
+
 public abstract class AbstractClientPlayer extends EntityPlayer
 {
     public static final ResourceLocation locationStevePng = new ResourceLocation("textures/entity/steve.png");
@@ -7,6 +9,8 @@ public abstract class AbstractClientPlayer extends EntityPlayer
     private ThreadDownloadImageData downloadImageCape;
     private ResourceLocation locationSkin;
     private ResourceLocation locationCape;
+    private String skinType = "default";
+    private String UUID = "";
 
     public AbstractClientPlayer(World par1World, String par2Str)
     {
@@ -25,11 +29,25 @@ public abstract class AbstractClientPlayer extends EntityPlayer
             this.downloadImageSkin = getDownloadImageSkin(this.locationSkin, this.username);
             this.downloadImageCape = getDownloadImageCape(this.locationCape, this.username);
             this.downloadImageCape.enabled = Config.isShowCapes();
+
+            //Do the shit for obtaining skin type here
+            ThreadFetchSkinType testing = new ThreadFetchSkinType(this);
+            testing.setDaemon(true);
+            testing.start();
         }
     }
 
     public String getSkinType(){
-        return "slim";
+        // System.out.println("GetSkinType: " + this.skinType);
+        return this.skinType;
+    }
+
+    public void setUUID(String uuid){
+        this.UUID = uuid;
+    }
+
+    public void setSkinType(String skin){
+        this.skinType = skin;
     }
 
     public ThreadDownloadImageData getTextureSkin()
