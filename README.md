@@ -4,7 +4,7 @@ Why forked? I wanted specifically a 1.6.4 client.
 
 Things I've done with the code since I was bored:
 - Switch from minotar to mc-heads
-- partial Slim Skin support (need to finish getSkinType, it only returns "slim")
+- Slim Skin support
 
 Original read me is below
 
